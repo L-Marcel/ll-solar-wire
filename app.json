@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "LL Solar Wire",
-    "slug": "ll-solar-wire",
+    "name": "Solar Wire",
+    "slug": "solar-wire",
     "version": "1.0.0",
     "icon": "./assets/images/icon.png",
-    "scheme": "llsolarwire",
+    "scheme": "solarwire",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -16,23 +16,24 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptativa-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "minSdkVersion": 24,
       "edgeToEdgeEnabled": true,
       "package": "com.lmarcel.llsolarwire"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/icon.png"
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/icon.png",
+          "image": "./assets/images/splash-icon.png",
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }

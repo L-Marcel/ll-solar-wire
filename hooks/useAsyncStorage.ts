@@ -7,7 +7,7 @@ function useAsyncStorage<T>(key: string, defaultValue: T) {
   useEffect(() => {
     async function loadStoredValue() {
       try {
-        const item = await AsyncStorage.getItem("ll-solar-wire@" + key);
+        const item = await AsyncStorage.getItem("solar-wire@" + key);
         const value = item ? JSON.parse(item) : defaultValue;
         setStoredValue(value);
       } catch (error) {
@@ -20,7 +20,7 @@ function useAsyncStorage<T>(key: string, defaultValue: T) {
 
   const update = useCallback(async(value: T) => {
     try {
-      await AsyncStorage.setItem("ll-solar-wire@" + key, JSON.stringify(value));
+      await AsyncStorage.setItem("solar-wire@" + key, JSON.stringify(value));
     } catch (error) {
       console.error("Erro ao salvar no AsyncStorage", error);
     }
