@@ -59,19 +59,23 @@ export default function HomeScreen() {
 
   const priceByConsume = useMemo(() => getValue().dividedBy(c), [getValue, c]);
 
-  const rows = useMemo(() => Array.from({ length: 6 }).map((_, i) => START_YEAR + i).map((year) => {
-    const yearPercentage = getYearPercent(year).mul(100);
-    const yearPercentageGain = yearPercentage.mul(percentage);
-    const availabilityValue = t.mul(100);
-    const value = getValue(year);
-
-    const rawYearPercentage = mask(yearPercentage.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, suffix: ' %' });
-    const rawYearPercentageGain = mask(yearPercentageGain.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, suffix: ' %' });
-    const rawConsume = mask(c.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, suffix: ' KWh' });
-    const rawValue =  mask(value.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, prefix: 'R$ ' });
-    const rawAvailabilityValue =  mask(availabilityValue.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, prefix: 'R$ ' });
-    return [year, rawYearPercentage, rawYearPercentageGain, rawConsume, rawValue, rawAvailabilityValue, value.lessThan(availabilityValue)? rawAvailabilityValue:rawValue];
-  }), [percentage, getValue]);
+  const now = new Date();
+  const rows = useMemo(() => Array.from({ length: 6 })
+    .map((_, i) => START_YEAR + i)
+    .filter((year) => year >= now.getFullYear())
+    .map((year) => {
+      const yearPercentage = getYearPercent(year).mul(100);
+      const yearPercentageGain = yearPercentage.mul(percentage);
+      const availabilityValue = t.mul(100);
+      const value = getValue(year);
+      
+      const rawYearPercentage = mask(yearPercentage.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, suffix: ' %' });
+      const rawYearPercentageGain = mask(yearPercentageGain.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, suffix: ' %' });
+      const rawConsume = mask(c.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, suffix: ' KWh' });
+      const rawValue =  mask(value.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, prefix: 'R$ ' });
+      const rawAvailabilityValue =  mask(availabilityValue.toFixed(2).replace(".", ""), [], "currency", { groupSeparator: '.', decimalSeparator: ',', precision: 2, prefix: 'R$ ' });
+      return [year, rawYearPercentage, rawYearPercentageGain, rawConsume, rawValue, rawAvailabilityValue, value.lessThan(availabilityValue)? rawAvailabilityValue:rawValue];
+    }), [percentage, getValue]);
 
   return (
     <SafeAreaProvider>
